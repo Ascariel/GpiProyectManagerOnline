@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GpiProyectManagerOnline</title>
+    <title>ProyectManagerOnline</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <style type="text/css">
+      body {
+        padding-top: 80px;
+      }
+    </style>
   </head>
 
   <body>
-    <%= yield %>
+
+    <div class="container">
+      <%= render partial: 'layouts/navbar' %>
+
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+
+    <div class="footer">
+      <%= render partial: 'layouts/footer' %>
+    </div>
+
+    <% if content_for?(:javascript) %>
+      <%= yield(:javascript) %>
+    <% end %>
+
+
+    <script type="text/javascript">
+      function show_alerts(){
+        alert = "<%= params[:alert] %>"
+        if (alert == 'proyecto_creado') {
+          swal("Proyecto Creado!", 'El proyecto ingresado ya se encuentra disponible en el listado de proyectos existentes', 'success')
+        }
+        if (alert == 'proyecto_eliminado') {
+          swal("Proyecto Eliminado!", '', 'success')
+        }
+        if (alert == 'proyecto_actualizado') {
+          swal("Proyecto Actualizado!", '', 'success')
+        }
+      }
+      show_alerts()
+    </script>
+
   </body>
 </html>

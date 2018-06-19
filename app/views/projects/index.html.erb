@@ -1,0 +1,59 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Listado de Proyectos</h3>
+  <br><br>
+</div>
+
+<div class="col-md-12">
+  <a href="/projects/new" class="btn btn-success btn-sm float-left">Ingresar Nuevo Proyecto</a>
+</div>
+<br>
+
+<table id="projects_table" class="table table-striped table-hover table-bordered" style="margin-top: 20px">
+  <thead>
+    <tr>
+      <th>ID Proyecto</th>
+      <th>Nombre</th>
+      <th>Categoria</th>
+      <th>Estado</th>
+      <th>Financiamiento</th>
+      <th>Inicio</th>
+      <th>Termino</th>
+      <th></th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.id %></td>
+        <td><%= project.name %></td>
+        <td><%= project.category.upcase %></td>
+        <td><%= project.status.upcase %></td>
+        <td>$<%= number_with_delimiter(project.funding, delimiter: '.') %></td>
+        <td><%= project.start_date %></td>
+        <td><%= project.end_date %></td>
+        <td>
+          <a href="/projects/<%= project.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
+          <a href="/projects/edit/<%= project.id %>" class="btn btn-warning btn-sm">Editar</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br><br><br><br><br><br><br>
+
+
+
+<% content_for :javascript do %>
+
+  <script type="text/javascript">
+//    $(document).ready( function () {
+        //$('#projects_table').DataTable({
+          //dom: 'f'
+        //});
+    //});
+  </script>
+<% end %>

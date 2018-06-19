@@ -1,0 +1,69 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Listado de Proyectos</h3>
+  <hr>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Proyecto</th>
+      <th>Nombre</th>
+      <th>Categoria</th>
+      <th>Estado</th>  
+    </tr>
+
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td>project.id</td>
+        <td>project.name</td>
+        <td>project.category</td>
+        <td>project.status</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="/projects">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input class="form-control" name="project[name]" type="text" required>
+    </div>
+    <div class="form-group">
+      <label>Categoria</label>
+      <input class="form-control" name="project[category]" type="email" required>
+    </div>
+    <div class="form-group">
+      <label>Descripcion</label>
+      <input class="form-control" name="project[description]" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Financiamiento</label>
+      <input class="form-control" name="project[funding]" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Inicio</label>
+      <input class="form-control" name="project[start_date]" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Termino</label>
+      <input class="form-control" name="project[end_date]" type="text" required>
+    </div>
+
+
+    <div class="text-center">
+      <button type="button" class="btn btn-secondary">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Registrarse</button>
+
+    </div>
+  </form>
+</div>
+<br><br><br><br><br><br><br>

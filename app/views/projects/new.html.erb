@@ -1,0 +1,63 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Ingresar Nuevo Proyecto</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+
+  <form method="POST" action="/projects">
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input class="form-control" name="project[name]" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Categoria</label>
+      <select class="form-control" name="project[category]">
+        <% Project.categories.map do |key, value| %>
+            <option value="<%= key %>"><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <select class="form-control" name="project[status]">
+        <% Project.statuses.map do |key, value| %>
+            <option value="<%= key %>"><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Financiamiento</label>
+      <input class="form-control" name="project[funding]" type="number" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Inicio</label>
+      <input class="form-control" name="project[start_date]" type="date" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Termino</label>
+      <input class="form-control" name="project[end_date]" type="date" required>
+    </div>
+
+    <div class="form-group">
+      <label>Descripcion</label>
+      <input class="form-control" name="project[description]" type="text">
+    </div>
+
+
+    <div class="text-center">
+    <a href="/projects" class="btn btn-secondary">Volver</a>
+    <button type="submit" class="btn btn-primary">Ingresar Nuevo proyecto</button>
+
+    </div>
+  </form>
+</div>
+<br><br><br><br><br><br><br>
