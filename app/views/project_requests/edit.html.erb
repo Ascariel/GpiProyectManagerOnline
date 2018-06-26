@@ -17,6 +17,7 @@
     <div class="form-group">
       <label>Encargado</label>
       <select class="form-control" name="project_request[user_id]">
+        <option value="0">Sin Asignar</option>
         <% User.all.map do |user| %>
           <% is_selected = @project_request.user_id == user.id %>
           <option value="<%= user.id %>" <%= 'selected' if is_selected %> ><%= user.name.titleize %></option>
@@ -27,6 +28,7 @@
     <div class="form-group">
       <label>Proyecto Asignado</label>
       <select class="form-control" name="project_request[project_id]">
+        <option value="0">Sin Asignar</option>
         <% Project.all.map do |project| %>
           <% is_selected = @project_request.project_id == project.id %>
           <option value="<%= project.id %>" <%= 'selected' if is_selected %> ><%= project.name.titleize %></option>
@@ -61,7 +63,7 @@
 
 
     <div class="text-center">
-      <a href="/projects" class="btn btn-secondary">Volver</a>
+      <a href="/project_requests" class="btn btn-secondary">Volver</a>
       <button type="submit" class="btn btn-primary">Editar Solicitud</button>
 
     </div>
