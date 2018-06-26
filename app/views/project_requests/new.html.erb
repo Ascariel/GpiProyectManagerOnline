@@ -1,0 +1,66 @@
+
+<div class="col-md-12 text-center">
+  <h3>Ingresar Nueva Solicitud</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+  <form method="POST" action="/project_requests" id="create_project_form">
+
+    <div class="form-group">
+      <label>Titulo Solicitud</label>
+      <input class="form-control" name="project_request[name]" type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Encargado</label>
+      <select class="form-control" name="project_request[user_id]">
+        <% User.all.map do |user| %>
+            <option value="<%= user.id %>"><%= user.name.upcase %> - (<%= user.email %>)</option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Proyecto</label>
+      <select class="form-control" name="project_request[project_id]">
+        <option value="0">Sin Asignar</option>
+        <% Project.all.map do |project| %>
+            <% is_selected = params[:project_id].to_i == project.id %>
+            <option value="<%= project.id %>" <%= 'selected' if is_selected %>><%= project.name.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Categoria</label>
+      <select class="form-control" name="project_request[category]">
+        <% ProjectRequest.categories.map do |key, value| %>
+            <option value="<%= key %>"><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <select class="form-control" name="project_request[status]">
+        <% ProjectRequest.statuses.map do |key, value| %>
+            <option value="<%= key %>"><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Descripcion</label>
+      <textarea name="project_request[description]" class="form-control" form="create_project_form" placeholder="Describa aqui su solicitud..." required></textarea>
+    </div>
+
+
+    <div class="text-center">
+    <a href="/projects" class="btn btn-secondary">Volver</a>
+    <button type="submit" class="btn btn-primary">Ingresar Nuevo proyecto</button>
+
+    </div>
+  </form>
+</div>
+<br><br><br><br><br><br><br>

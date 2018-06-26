@@ -1,0 +1,70 @@
+
+
+<div class="col-md-12 text-center">
+  <h3>Editar Proyecto</h3>
+  <hr>
+</div>
+
+<div class="col-md-6 offset-md-3">
+
+  <form method="POST" action="/project_requests/edit/<%= @project_request.id %>">
+
+    <div class="form-group">
+      <label>Nombre Solicitud</label>
+      <input class="form-control" name="project_request[name]" type="text" value="<%= @project_request.name %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Encargado</label>
+      <select class="form-control" name="project_request[user_id]">
+        <% User.all.map do |user| %>
+          <% is_selected = @project_request.user_id == user.id %>
+          <option value="<%= user.id %>" <%= 'selected' if is_selected %> ><%= user.name.titleize %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Proyecto Asignado</label>
+      <select class="form-control" name="project_request[project_id]">
+        <% Project.all.map do |project| %>
+          <% is_selected = @project_request.project_id == project.id %>
+          <option value="<%= project.id %>" <%= 'selected' if is_selected %> ><%= project.name.titleize %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Categoria</label>
+      <select class="form-control" name="project_request[category]">
+        <% ProjectRequest.categories.map do |key, value| %>
+          <% is_selected = @project_request.category == key %>
+          <option value="<%= key %>" <%= 'selected' if is_selected %> ><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <select class="form-control" name="project_request[status]">
+        <% ProjectRequest.statuses.map do |key, value| %>
+          <% is_selected = @project_request.status == key %>
+          <option value="<%= key %>" <%= 'selected' if is_selected %> ><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Descripcion</label>
+      <input class="form-control" name="project_request[description]" type="text" value="<%= @project_request.description %>">
+    </div>
+
+
+    <div class="text-center">
+      <a href="/projects" class="btn btn-secondary">Volver</a>
+      <button type="submit" class="btn btn-primary">Editar Solicitud</button>
+
+    </div>
+  </form>
+</div>
+<br><br><br><br><br><br><br>

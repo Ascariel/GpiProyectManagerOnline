@@ -1,69 +1,128 @@
 
 
 <div class="col-md-12 text-center">
-  <h3>Listado de Proyectos</h3>
+  <h3>Detalles Proyecto</h3>
   <hr>
 </div>
 
-<table>
+<div class="col-md-6 offset-md-3">
+
+  <form method="POST" action="/projects/edit/<%= @project.id %>">
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input class="form-control" name="project[name]" type="text" value="<%= @project.name %>" required disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Categoria</label>
+      <select class="form-control" disabled name="project[category]">
+
+        <% Project.categories.map do |key, value| %>
+          <% is_selected = @project.category == key %>
+          <option value="<%= key %>" <%= 'selected' if is_selected %> ><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Estado</label>
+      <select class="form-control" disabled name="project[status]">
+        <% Project.statuses.map do |key, value| %>
+          <% is_selected = @project.status == key %>
+          <option value="<%= key %>" <%= 'selected' if is_selected %> ><%= key.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Financiamiento</label>
+      <input class="form-control" disabled name="project[funding]" type="number" value="<%= @project.funding %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Inicio</label>
+      <input class="form-control" disabled name="project[start_date]" type="date" value="<%= @project.start_date %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Fecha Termino</label>
+      <input class="form-control" disabled name="project[end_date]" type="date" value="<%= @project.end_date %>" required>
+    </div>
+
+    <div class="form-group">
+      <label>Descripcion</label>
+      <input class="form-control" disabled name="project[description]" type="text" value="<%= @project.description %>">
+    </div>
+
+
+    <div class="text-center">
+      <a href="/projects" class="btn btn-secondary">Volver</a>
+      <a href="/projects/edit/<%= @project.id %>" class="btn btn-primary">Editar Proyecto</a>
+
+    </div>
+  </form>
+</div>
+
+<div class="col-md-12 text-center" style="margin-top:40px;">
+  <h3 class="float-left">Solicitudes Asociadas</h3>
+  <br><br>
+</div>
+
+<div class="col-md-12">
+  <a href="/project_requests/new?project_id=<%= @project.id %>" class="btn btn-success btn-sm float-left">Ingresar Nueva Solicitud</a>
+</div>
+<br>
+
+<table id="projects_table" class="table table-striped table-hover " style="margin-top: 20px">
   <thead>
     <tr>
-      <th>ID Proyecto</th>
-      <th>Nombre</th>
+      <th>ID</th>
+      <th>Titulo</th>
+      <th>Encargado</th>
       <th>Categoria</th>
-      <th>Estado</th>  
+      <th>Estado</th>
+      <th>Fecha Creacion</th>
+      <th></th>
     </tr>
 
   </thead>
   <tbody>
-    <% @projects.each do |project| %>
+    <% @project_requests.each do |project_request| %>
       <tr>
-        <td>project.id</td>
-        <td>project.name</td>
-        <td>project.category</td>
-        <td>project.status</td>
+        <td><%= project_request.id %></td>
+        <td><%= project_request.name&.titleize %></td>
+        <td><%= project_request.user&.name&.titleize || 'POR ASIGNAR' %></td>
+        <td><%= project_request.category.upcase %></td>
+        <td><%= project_request.status.upcase %></td>
+        <td><%= project_request.created_at.to_date %></td>
+        <td>
+          <a href="/project_requests/<%= project_request.id %>" data-method="DELETE" class="btn btn-danger btn-sm">Eliminar</a>
+          <a href="/project_requests/edit/<%= project_request.id %>" class="btn btn-warning btn-sm">Editar</a>
+          <a href="#" data-project-description="<%= project_request.description.truncate(100) %>" data-project-title="<%= project_request.name.titleize %>" class="see_description_btn btn btn-info btn-sm">Detalles</a>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 
-<div class="col-md-6 offset-md-3">
-  <form method="POST" action="/projects">
-    <div class="form-group">
-      <label>Nombre</label>
-      <input class="form-control" name="project[name]" type="text" required>
-    </div>
-    <div class="form-group">
-      <label>Categoria</label>
-      <input class="form-control" name="project[category]" type="email" required>
-    </div>
-    <div class="form-group">
-      <label>Descripcion</label>
-      <input class="form-control" name="project[description]" type="text" required>
-    </div>
 
-    <div class="form-group">
-      <label>Financiamiento</label>
-      <input class="form-control" name="project[funding]" type="text" required>
-    </div>
+<% content_for :javascript do %>
 
-    <div class="form-group">
-      <label>Fecha Inicio</label>
-      <input class="form-control" name="project[start_date]" type="text" required>
-    </div>
-
-    <div class="form-group">
-      <label>Fecha Termino</label>
-      <input class="form-control" name="project[end_date]" type="text" required>
-    </div>
-
-
-    <div class="text-center">
-      <button type="button" class="btn btn-secondary">Cancelar</button>
-    <button type="submit" class="btn btn-primary">Registrarse</button>
-
-    </div>
-  </form>
-</div>
-<br><br><br><br><br><br><br>
+  <script type="text/javascript">
+   $(document).ready( function () {
+      $(".see_description_btn").on('click', function(e){
+        e.preventDefault();
+        btn = $(this)
+        console.log(btn.data())
+        var title = btn.data('project-title')
+        var description = btn.data('project-description')
+        swal('Titulo: ' + title, 'Descripcion: ' + description)
+      })
+        // $('#projects_table').DataTable({
+        //   dom: 'f'
+        // });
+    });
+  </script>
+<% end %>

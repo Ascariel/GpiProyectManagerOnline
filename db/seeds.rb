@@ -10,4 +10,4 @@
 user1 = User.find_or_initialize_by(email: 'pablocangas@gmail.com')
 user1.update!(name: "Pablo Cangas", email: 'pablocangas@gmail.com', phone: '23432432', password: 'passpass', password_confirmation: 'passpass') if user1.new_record?
 
-# FactoryGirl.create_list(:project, 10)
+# FactoryGirl.create_list(:project, 15)

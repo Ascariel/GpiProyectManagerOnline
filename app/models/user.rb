@@ -7,5 +7,5 @@ class User < ApplicationRecord
   validates :email, :name, :password, :password_confirmation, presence: true
   validates :email, uniqueness: true
 
-
+  has_many :project_requests
 end

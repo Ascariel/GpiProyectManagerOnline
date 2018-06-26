@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find_by(id: params[:id])
+    @project_requests = @project.project_requests.order(created_at: :desc)
   end
 
   def new
@@ -26,7 +27,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     Project.find(params[:id]).destroy
-    redirect_to '?alert=proyecto_eliminado'
+    redirect_to '/projects?alert=proyecto_eliminado'
   end
 
   def index
